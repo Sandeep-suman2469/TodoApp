@@ -1,25 +1,41 @@
-import logo from './logo.svg';
+
+import { useState } from 'react';
 import './App.css';
 
 function App() {
+  const [todos, setTodos] = useState([
+     { id: 1, text: "xyz", completed: false},
+     { id: 2, text: "abc", completed: false}
+  ])
+  const [input, setInput] = useState('')
+
+  function addTodo(e){
+         e.preventDefault();
+         setTodos([...todos, {id: Date.now(), text: input, completed: false}])
+         setInput('')
+  }
+  // function onSubmithandler(e){
+  //   e.preventDefault();
+  //   addTodo();
+  // }
   return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
-    </div>
+   <div className='container'>
+     <h2>Todo App</h2>
+     {todos.map((todo) => (
+          <div key={todo.id}>
+           <input type="checkbox" />
+            {todo.text}
+          </div>
+        ))}
+
+     <form onSubmit={addTodo} >
+      <input 
+      value={input}
+      onChange={(e) => setInput(e.target.value)}/>
+      <button >Submit</button>
+     </form>
+   </div>
   );
 }
-
 export default App;
+
